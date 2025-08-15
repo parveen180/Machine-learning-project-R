@@ -10,10 +10,26 @@ split = sample.split(dataset$Profit,SplitRatio = 0.8)
 training_set=subset(dataset,split==TRUE)
 test_set=subset(dataset, split==FALSE)
 
-regressor=lm(formula = Profit ~ R.D.Spend,
+regressor=lm(formula = Profit ~ .,
              data=training_set)
-#no need of below method because rd spend is only  varibale that can effect profit
-#regressor=lm(formula = Profit ~ .,
-            # data=training_set)
-#x_pred=predict(regressor,newdata = test_set)
 y_pred=predict(regressor,newdata = test_set)
+
+#regressor=lm(formula = Profit ~ R.D.Spend,
+            # data=training_set)
+
+#backward elimination
+regressor=lm(formula = Profit ~ R.D.Spend + Administration + Marketing.Spend + State,
+             data=dataset)
+summary(regressor)
+
+regressor=lm(formula = Profit ~ R.D.Spend + Administration + Marketing.Spend,
+             data=dataset)
+summary(regressor)
+
+regressor=lm(formula = Profit ~ R.D.Spend  + Marketing.Spend,
+             data=dataset)
+summary(regressor)
+regressor=lm(formula = Profit ~ R.D.Spend,
+             data=dataset)
+summary(regressor)
+
